@@ -2,6 +2,9 @@ import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { OpenAIEmbeddings , ChatOpenAI } from "@langchain/openai";
 import { Pinecone } from "@pinecone-database/pinecone";
 import { text } from "./text.js";
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 const pinecone = new Pinecone({
   apiKey:
@@ -23,7 +26,7 @@ const createChunks = async () => {
 const createEmbeddings = async (texts) => {
   const embeddings = new OpenAIEmbeddings({
     openAIApiKey:
-      process.env.OPENAI_API_KEY 
+      process.env.OPENAI_API_KEY
   });
   return await embeddings.embedDocuments(texts);
 };
@@ -96,7 +99,7 @@ const chat = async (req, res) => {
     // Step 1: Embed the question
     const embedder = new OpenAIEmbeddings({
       openAIApiKey:
-        process.env.OPENAI_API_KEY 
+        process.env.OPENAI_API_KEY
     });
     const queryEmbedding = await embedder.embedQuery(query);
 
